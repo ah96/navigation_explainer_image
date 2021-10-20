@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-# Defining parameters - global variables
-
 # possible explanation algorithms: 'lime', 'anchors'
 explanation_alg = 'lime'
 
@@ -115,36 +113,32 @@ def preprocess_data(local_costmap_info, odom, amcl_pose, cmd_vel, tf_odom_map, t
 
     return num_of_first_rows_to_delete, local_costmap_info, odom, amcl_pose, cmd_vel, tf_odom_map, tf_map_odom
 
-
-if explanation_alg == 'lime':
-
-    # Data loading
-    from navigation_explainer.LIME import DataLoader
+from navigation_explainer import DataLoader
     
-    # load input data
-    odom, plan, teb_global_plan, teb_local_plan, current_goal, local_costmap_data, local_costmap_info, amcl_pose, tf_odom_map, tf_map_odom, map_data, map_info, footprints = DataLoader.load_input_data()
+# load input data
+odom, plan, teb_global_plan, teb_local_plan, current_goal, local_costmap_data, local_costmap_info, amcl_pose, tf_odom_map, tf_map_odom, map_data, map_info, footprints = DataLoader.load_input_data()
 
-    # load output data
-    cmd_vel = DataLoader.load_output_data()
+# load output data
+cmd_vel = DataLoader.load_output_data()
 
-    num_of_first_rows_to_delete, local_costmap_info, odom, amcl_pose, cmd_vel, tf_odom_map, tf_map_odom = preprocess_data(local_costmap_info, odom, amcl_pose, cmd_vel, tf_odom_map, tf_map_odom, plan, teb_global_plan, teb_local_plan, footprints)
+num_of_first_rows_to_delete, local_costmap_info, odom, amcl_pose, cmd_vel, tf_odom_map, tf_map_odom = preprocess_data(local_costmap_info, odom, amcl_pose, cmd_vel, tf_odom_map, tf_map_odom, plan, teb_global_plan, teb_local_plan, footprints)
 
-    costmap_size = local_costmap_info.iloc[0, 2]
-    #print('costmap_size: ', costmap_size)
-    
-    # Explanation
-    from navigation_explainer.LIME import ExplainNavigation
+costmap_size = local_costmap_info.iloc[0, 2]
+#print('costmap_size: ', costmap_size)
 
-    exp_nav = ExplainNavigation.ExplainRobotNavigation(cmd_vel, odom, plan, teb_global_plan, teb_local_plan,
-                                                        current_goal, local_costmap_data, local_costmap_info,
-                                                        amcl_pose, tf_odom_map, tf_map_odom, map_data, map_info, num_of_first_rows_to_delete, footprints, costmap_size)
+# Explanation
+from navigation_explainer import ExplainNavigation
 
-    # optional instance selection - deterministic
-    #expID = 50
+exp_nav = ExplainNavigation.ExplainRobotNavigation(explanation_alg, cmd_vel, odom, plan, teb_global_plan, teb_local_plan,
+                                                    current_goal, local_costmap_data, local_costmap_info,
+                                                    amcl_pose, tf_odom_map, tf_map_odom, map_data, map_info, num_of_first_rows_to_delete, footprints, costmap_size)
 
-    # random instance selection
-    import random
-    expID = random.randint(0, local_costmap_info.shape[0]) 
+# optional instance selection - deterministic
+#expID = 50
 
-    exp_nav.explain_instance(expID)
-    #exp_nav.testSegmentation(expID)
+# random instance selection
+import random
+expID = random.randint(0, local_costmap_info.shape[0]) 
+
+exp_nav.explain_instance(expID)
+#exp_nav.testSegmentation(expID)

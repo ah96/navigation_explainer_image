@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
-import numpy as np
 import pandas as pd
+
+path_core = '~/amar_ws/src/navigation_explainer/include/navigation_explainer'
 
 
 # Load output data
 def load_output_data():
-    cmd_vel = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Output/cmd_vel.csv')
+    cmd_vel = pd.read_csv(path_core + '/Output/cmd_vel.csv')
     #cmd_vel.head()
     '''
     print('cmd_vel:')
@@ -24,7 +25,7 @@ def load_output_data():
 
 # Load input data
 def load_input_data():
-    odom = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/odom.csv')
+    odom = pd.read_csv(path_core + '/Input/odom.csv')
     #odom.head()
     '''
     print('odom:')
@@ -38,7 +39,7 @@ def load_input_data():
     '''
 
 
-    teb_global_plan = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/teb_global_plan.csv')
+    teb_global_plan = pd.read_csv(path_core + '/Input/teb_global_plan.csv')
     #teb_global_plan.head()
     '''
     print('teb_global_plan:')
@@ -52,7 +53,7 @@ def load_input_data():
     ''' 
 
 
-    teb_local_plan = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/teb_local_plan.csv')
+    teb_local_plan = pd.read_csv(path_core + '/Input/teb_local_plan.csv')
     #teb_local_plan.head()
     '''
     print('teb_local_plan:')
@@ -66,7 +67,7 @@ def load_input_data():
     '''
 
     
-    current_goal = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/current_goal.csv')
+    current_goal = pd.read_csv(path_core + '/Input/current_goal.csv')
     #current_goal.head()
     '''
     print('current_goal:')
@@ -80,7 +81,7 @@ def load_input_data():
     '''
 
     
-    local_costmap_info = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/local_costmap_info.csv')
+    local_costmap_info = pd.read_csv(path_core + '/Input/local_costmap_info.csv')
     #local_costmap_info.head()
     '''
     print('local_costmap_info:')
@@ -94,7 +95,7 @@ def load_input_data():
     '''
 
     
-    local_costmap_data = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/local_costmap_data.csv',
+    local_costmap_data = pd.read_csv(path_core + '/Input/local_costmap_data.csv',
                                      header=None)
     #local_costmap_data.head()
     '''
@@ -123,7 +124,7 @@ def load_input_data():
         '''
 
 
-    plan = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/plan.csv')
+    plan = pd.read_csv(path_core + '/Input/plan.csv')
     #plan.head()
     '''
     print('plan:')
@@ -137,7 +138,7 @@ def load_input_data():
     '''
 
 
-    amcl_pose = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/amcl_pose.csv')
+    amcl_pose = pd.read_csv(path_core + '/Input/amcl_pose.csv')
     #amcl_pose.head()
     '''
     print('amcl_pose:')
@@ -151,7 +152,7 @@ def load_input_data():
     '''
 
 
-    tf_odom_map = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/tf_odom_map.csv')
+    tf_odom_map = pd.read_csv(path_core + '/Input/tf_odom_map.csv')
     #tf_odom_map.head()
     '''
     print('tf_odom_map:')
@@ -165,7 +166,7 @@ def load_input_data():
     '''
 
 
-    tf_map_odom = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/tf_map_odom.csv')
+    tf_map_odom = pd.read_csv(path_core + '/Input/tf_map_odom.csv')
     #tf_map_odom.head()
     '''
     print('tf_map_odom:')
@@ -179,7 +180,7 @@ def load_input_data():
     '''
 
 
-    map_info = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/map_info.csv')
+    map_info = pd.read_csv(path_core + '/Input/map_info.csv')
     #map_info.head()
     '''
     print('map_info:')
@@ -193,7 +194,7 @@ def load_input_data():
     '''
 
 
-    map_data = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/map_data.csv', header=None)
+    map_data = pd.read_csv(path_core + '/Input/map_data.csv', header=None)
     #map_data.head()
     '''
     print('map_data:')
@@ -222,7 +223,7 @@ def load_input_data():
 
 
     
-    footprints = pd.read_csv('~/amar_ws/src/navigation_explainer/include/navigation_explainer/Input/footprints.csv')
+    footprints = pd.read_csv(path_core + '/Input/footprints.csv')
     #footprints.head()
     '''
     print('footprints:')
