@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>navigation_explainer</name>
+  <name>navigation_explainer_image</name>
   <version>0.0.0</version>
-  <description>The navigation_explainer package</description>
+  <description>The navigation_explainer_image package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <maintainer email="amar.halilovic@uni-ulm.de">Amar Halilovic</maintainer>

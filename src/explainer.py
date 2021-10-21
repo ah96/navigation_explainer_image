@@ -113,7 +113,7 @@ def preprocess_data(local_costmap_info, odom, amcl_pose, cmd_vel, tf_odom_map, t
 
     return num_of_first_rows_to_delete, local_costmap_info, odom, amcl_pose, cmd_vel, tf_odom_map, tf_map_odom
 
-from navigation_explainer import DataLoader
+from navigation_explainer_image import DataLoader
     
 # load input data
 odom, plan, teb_global_plan, teb_local_plan, current_goal, local_costmap_data, local_costmap_info, amcl_pose, tf_odom_map, tf_map_odom, map_data, map_info, footprints = DataLoader.load_input_data()
@@ -127,7 +127,7 @@ costmap_size = local_costmap_info.iloc[0, 2]
 #print('costmap_size: ', costmap_size)
 
 # Explanation
-from navigation_explainer import ExplainNavigation
+from navigation_explainer_image import ExplainNavigation
 
 exp_nav = ExplainNavigation.ExplainRobotNavigation(explanation_alg, cmd_vel, odom, plan, teb_global_plan, teb_local_plan,
                                                     current_goal, local_costmap_data, local_costmap_info,

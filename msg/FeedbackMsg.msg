@@ -4,7 +4,7 @@
 std_msgs/Header header
 
 # The planned trajectory (or if multiple plans exist, all of them)
-navigation_explainer/TrajectoryMsg[] trajectories
+navigation_explainer_image/TrajectoryMsg[] trajectories
 
 # Index of the trajectory in 'trajectories' that is selected currently
 uint16 selected_trajectory_idx

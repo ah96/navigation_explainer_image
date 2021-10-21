@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(navigation_explainer)
+project(navigation_explainer_image)
 
 set(CMAKE_BUILD_TYPE Release)
 
@@ -94,7 +94,7 @@ generate_dynamic_reconfigure_options(
 
 catkin_package(
   INCLUDE_DIRS include ${EXTERNAL_INCLUDE_DIRS}
-  LIBRARIES navigation_explainer ${EXTERNAL_LIBS}
+  LIBRARIES navigation_explainer_image ${EXTERNAL_LIBS}
   CATKIN_DEPENDS
     base_local_planner
     costmap_2d
@@ -124,9 +124,9 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-## Build the navigation_explainer library
+## Build the navigation_explainer_image library
 
-add_library(navigation_explainer
+add_library(navigation_explainer_image
    src/tlp/timed_elastic_band.cpp
    src/tlp/optimal_planner.cpp
    src/tlp/obstacles.cpp
@@ -141,11 +141,11 @@ add_library(navigation_explainer
 )
 
 # Dynamic reconfigure: make sure configure headers are built before any node using them
-add_dependencies(navigation_explainer ${PROJECT_NAME}_gencfg)
+add_dependencies(navigation_explainer_image ${PROJECT_NAME}_gencfg)
 # Generate messages before compiling the lib
-add_dependencies(navigation_explainer ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(navigation_explainer_image ${PROJECT_NAME}_generate_messages_cpp)
 
-target_link_libraries(navigation_explainer
+target_link_libraries(navigation_explainer_image
    ${EXTERNAL_LIBS}
    ${catkin_LIBRARIES}
 )
@@ -154,13 +154,13 @@ add_executable(pni src/tlp/pni.cpp)
 
 
 target_link_libraries(pni
-   navigation_explainer
+   navigation_explainer_image
    ${EXTERNAL_LIBS}
    ${catkin_LIBRARIES}
 )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS navigation_explainer
+install(TARGETS navigation_explainer_image
    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 install(TARGETS pni
