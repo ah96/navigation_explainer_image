@@ -134,7 +134,7 @@ exp_nav = ExplainNavigation.ExplainRobotNavigation(explanation_alg, cmd_vel, odo
                                                     amcl_pose, tf_odom_map, tf_map_odom, map_data, map_info, num_of_first_rows_to_delete, footprints, costmap_size)
 
 # optional instance selection - deterministic
-#expID = 50
+#expID = 160
 
 # random instance selection
 import random
