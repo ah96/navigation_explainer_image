@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 import pandas as pd
-
-path_core = '~/amar_ws/src/navigation_explainer_image/include/navigation_explainer_image'
-
+import os
 
 # Load output data
 def load_output_data():
+    path_core = os.getcwd() + '/src/navigation_explainer_image/include/navigation_explainer_image'
+    
     cmd_vel = pd.read_csv(path_core + '/Output/cmd_vel.csv')
     #cmd_vel.head()
     '''
@@ -25,6 +25,8 @@ def load_output_data():
 
 # Load input data
 def load_input_data():
+    path_core = os.getcwd() + '/src/navigation_explainer_image/include/navigation_explainer_image'
+
     odom = pd.read_csv(path_core + '/Input/odom.csv')
     #odom.head()
     '''
