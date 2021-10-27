@@ -31,7 +31,7 @@ from skimage.measure import regionprops
 perturb_hide_color_value = 50
 
 class ExplainRobotNavigation:
-
+    # class constructor
     def __init__(self, explanation_alg, cmd_vel, odom, plan, global_plan, local_plan, current_goal, local_costmap_data,
                  local_costmap_info, amcl_pose, tf_odom_map, tf_map_odom, map_data, map_info, num_of_first_rows_to_delete, footprints, costmap_size):
         print('Constructor starting\n')
@@ -61,6 +61,7 @@ class ExplainRobotNavigation:
 
         print('Constructor ending\n')
 
+    # function for explaining one instance and plotting results
     def explain_instance(self, expID):
         print('explain_instance function starting\n')
 
@@ -102,6 +103,7 @@ class ExplainRobotNavigation:
                                                                             hide_rest=False,
                                                                             min_weight=0.1)  # min_weight=0.1 - default
 
+            # plot results
             self.plotExplanationMinimal()
             #self.plotExplanationMinimalFlipped()
             #self.plotExplanation()
@@ -109,6 +111,7 @@ class ExplainRobotNavigation:
 
         print('explain_instance function ending')
 
+    # turn inflated area to free space and costmap entries with values of 100 to 99
     def inflatedToFree(self):
         #'''
         # Turn inflated area to free space and 100s to 99s
@@ -120,6 +123,7 @@ class ExplainRobotNavigation:
                     self.image[i, j] = 99
         #'''
 
+    # flip matrix by chosen axis
     def matrixFlip(self, m, d):
         myl = np.array(m)
         if d == 'v':
@@ -127,6 +131,7 @@ class ExplainRobotNavigation:
         elif d == 'h':
             return np.flip(myl, axis=1)
 
+    # convert quaternion to euler angles
     def quaternion_to_euler(self, x, y, z, w):
         # roll (x-axis rotation)
         t0 = +2.0 * (w * x + y * z)
@@ -146,6 +151,7 @@ class ExplainRobotNavigation:
 
         return [yaw, pitch, roll]
 
+    # convert euler angles to quaternion representation
     def euler_to_quaternion(self, yaw, pitch, roll):
         #qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
         #qy = np.cos(roll/2) * np.sin(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.cos(pitch/2) * np.sin(yaw/2)
@@ -159,6 +165,7 @@ class ExplainRobotNavigation:
         
         return [qx, qy, qz, qw]
 
+    # print important information
     def printImportantInformation(self):
         # print important information
 
@@ -169,6 +176,7 @@ class ExplainRobotNavigation:
         print('\n')
         #'''
 
+    # save input data to .csv files for local planner
     def limeImageSaveData(self):
         # Saving data to .csv files for C++ node - local navigation planner
         path_core = os.getcwd() + '/src/navigation_explainer_image/src/tlp/Data'
@@ -311,6 +319,7 @@ class ExplainRobotNavigation:
         #print('pitch_amcl: ', pitch_amcl)
         #print('yaw_amcl: ', self.yaw_amcl)
 
+    # plot every costmap perturbation
     def classifier_fn_image_plot(self):
         '''
         # Visualise last 10 perturbations and last 100 perturbations separately
@@ -431,6 +440,7 @@ class ExplainRobotNavigation:
             plt.clf()
         #'''
 
+    # classifier function for the chosen algorithm
     def classifier_fn_image(self, sampled_instance):
 
         print('classifier_fn_image started')
@@ -777,6 +787,7 @@ class ExplainRobotNavigation:
 
         return np.array(self.cmd_vel_perturb.iloc[:, 3:])
 
+    # plot explanation picture and segments
     def plotExplanationMinimal(self):
         path_core = os.getcwd()
 
@@ -969,6 +980,7 @@ class ExplainRobotNavigation:
         fig.clf()
         #fig.close()
 
+    # plot explanation picture and segments flipped
     def plotExplanationMinimalFlipped(self):
         path_core = os.getcwd()    
 
@@ -1163,6 +1175,7 @@ class ExplainRobotNavigation:
         fig.clf()
         #fig.close()
 
+    # plot explanation picture, segments, global map, mask and temp
     def plotExplanation(self):
         print('plotExplanation starts')
 
@@ -1337,6 +1350,7 @@ class ExplainRobotNavigation:
 
         print('plotExplanation ends')
 
+    # plot explanation picture, segments, global map, mask and temp all flipped
     def plotExplanationFlipped(self):
         print('plotExplanationFlipped starts')
 
@@ -1542,7 +1556,7 @@ class ExplainRobotNavigation:
         print('plotExplanationFlipped ends')
 
     
-    
+    # test different segmentation algorithms
     def testSegmentation(self, expID):
 
         print('Test segmentation function beginning')
@@ -1623,6 +1637,7 @@ class ExplainRobotNavigation:
 
         print('Test segmentation function ending')
 
+    # manually implemented segmentation algorithm suitable for segmenting costmaps
     def mySlicTest(self, img_rgb):
 
         print('mySlic for testSegmentation starts')

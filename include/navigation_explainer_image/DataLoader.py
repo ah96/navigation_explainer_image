@@ -3,7 +3,7 @@
 import pandas as pd
 import os
 
-# Load output data
+# function for loading output data from .csv files
 def load_output_data():
     path_core = os.getcwd() + '/src/navigation_explainer_image/include/navigation_explainer_image'
     
@@ -23,7 +23,7 @@ def load_output_data():
     return cmd_vel
 
 
-# Load input data
+# function for loading input data from .csv files
 def load_input_data():
     path_core = os.getcwd() + '/src/navigation_explainer_image/include/navigation_explainer_image'
 

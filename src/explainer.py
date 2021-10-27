@@ -6,6 +6,8 @@ explanation_alg = 'lime'
 # size of the one dimension of a local costmap
 costmap_size = 160
 
+# preprocessing data
+# exclude all rows that coincides with rows with 'None' frame and with missing rows from plans 
 def preprocess_data(local_costmap_info, odom, amcl_pose, cmd_vel, tf_odom_map, tf_map_odom, plan, teb_global_plan, teb_local_plan, footprints):
     offsets = []
     # Detect number of entries with 'None' frame based on local_costmap_info
@@ -129,16 +131,20 @@ costmap_size = local_costmap_info.iloc[0, 2]
 # Explanation
 from navigation_explainer_image import ExplainNavigation
 
+# create object of ExplainNavigation class
 exp_nav = ExplainNavigation.ExplainRobotNavigation(explanation_alg, cmd_vel, odom, plan, teb_global_plan, teb_local_plan,
                                                     current_goal, local_costmap_data, local_costmap_info,
                                                     amcl_pose, tf_odom_map, tf_map_odom, map_data, map_info, num_of_first_rows_to_delete, footprints, costmap_size)
 
 # optional instance selection - deterministic
-expID = 171 #196 #171
+#expID = 10 
 
 # random instance selection
-#import random
-#expID = random.randint(0, local_costmap_info.shape[0]) 
+import random
+expID = random.randint(0, local_costmap_info.shape[0] - num_of_first_rows_to_delete) 
 
+# explain chosen instance
 exp_nav.explain_instance(expID)
+
+# test and play with image segmentation
 #exp_nav.testSegmentation(expID)
