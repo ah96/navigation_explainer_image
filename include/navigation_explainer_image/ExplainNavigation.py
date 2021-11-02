@@ -1563,29 +1563,9 @@ class ExplainRobotNavigation:
         print('plotExplanationFlipped ends')
 
     
-    # test different segmentation algorithms
     def testSegmentation(self, expID):
 
         print('Test segmentation function beginning')
-
-        path_core = os.getcwd()
-
-        self.expID = expID
-            
-        self.index = self.expID
-
-        # Get local costmap
-        # Original costmap will be saved to self.local_costmap_original
-        self.local_costmap_original = self.costmap_data.iloc[(self.index) * self.costmap_size:(self.index + 1) * self.costmap_size, :]
-
-        # Make image a np.array deepcopy of local_costmap_original
-        self.image = np.array(copy.deepcopy(self.local_costmap_original))
-
-        # Turn inflated area to free space and 100s to 99s
-        self.inflatedToFree()
-
-        # Turn every local costmap entry from int to float, so the segmentation algorithm works okay
-        self.image = self.image * 1.0
 
         # Make image a np.array deepcopy of local_costmap_original
         img_ = copy.deepcopy(self.image)
@@ -1600,13 +1580,14 @@ class ExplainRobotNavigation:
         ax.set_axis_off()
         fig.add_axes(ax)
         ax.imshow(img_, aspect='auto')
-        fig.savefig(path_core + '/testSegmentation_image_gray.png')
+        fig.savefig('local_costmap_gray_test_segmentation.png')
         fig.clf()
         '''
 
         # Turn gray image to rgb image
         rgb = gray2rgb(img_)
 
+        '''
         # Save local costmap as rgb image
         fig = plt.figure(frameon=False)
         w = 4.8
@@ -1616,8 +1597,9 @@ class ExplainRobotNavigation:
         ax.set_axis_off()
         fig.add_axes(ax)
         ax.imshow(rgb, aspect='auto')
-        fig.savefig(path_core + '/testSegmentation_image_rgb.png')
+        fig.savefig('local_costmap_rgb_test_segmentation.png')
         fig.clf()
+        '''
 
         # Superpixel segmentation with skimage functions
 
@@ -1640,27 +1622,21 @@ class ExplainRobotNavigation:
         segments = self.mySlicTest(rgb)
 
         # Save segments to .csv file
-        #pd.DataFrame(segments).to_csv(path_core + '/segments_segmentation_test.csv', index=False, header=False)
+        #pd.DataFrame(segments).to_csv('~/amar_ws/segments_segmentation_test.csv', index=False, header=False)
 
         print('Test segmentation function ending')
 
-    # manually implemented segmentation algorithm suitable for segmenting costmaps
     def mySlicTest(self, img_rgb):
 
         print('mySlic for testSegmentation starts')
 
-        path_core = os.getcwd()
-
         # import needed libraries
-        #from skimage.segmentation import slic
-        #from skimage.measure import regionprops
+        from skimage.segmentation import slic
+        from skimage.measure import regionprops
         import matplotlib.pyplot as plt
 
-        
         # show original image
         img = img_rgb[:, :, 0]
-        
-        '''
         # Save picture for segmenting
         fig = plt.figure(frameon=False)
         w = 4.8
@@ -1670,9 +1646,8 @@ class ExplainRobotNavigation:
         ax.set_axis_off()
         fig.add_axes(ax)
         ax.imshow(img, aspect='auto')
-        fig.savefig(path_core + '/testSegmentation_img.png')
+        fig.savefig('local_costmap_test_segmentation.png')
         fig.clf()
-        '''
 
         # segments_1 - good obstacles
         # Find segments_1
@@ -1680,20 +1655,7 @@ class ExplainRobotNavigation:
                           multichannel=True, convert2lab=True,
                           enforce_connectivity=True, min_size_factor=0.01, max_size_factor=5, slic_zero=False,
                           start_label=1, mask=None)
-        '''
         # plot segments_1 with centroids and labels
-        regions = regionprops(segments_1)
-        centers = []
-        i = 0
-        for props in regions:
-            v = props.label  # value of label
-            cx, cy = props.centroid  # centroid coordinates
-            centers.append([cy, cx])
-            plt.scatter(centers[i][0], centers[i][1], c='white', marker='o')
-            plt.text(centers[i][0], centers[i][1], str(v))
-            i = i + 1
-        
-        # Save segments_1 as a picture
         fig = plt.figure(frameon=False)
         w = 4.8
         h = 4.8
@@ -1702,14 +1664,25 @@ class ExplainRobotNavigation:
         ax.set_axis_off()
         fig.add_axes(ax)
         ax.imshow(segments_1, aspect='auto')
-        fig.savefig(path_core + 'testSegmentation_segments_1.png')
+        regions = regionprops(segments_1)
+        centers = []
+        i = 0
+        for props in regions:
+            v = props.label  # value of label
+            cx, cy = props.centroid  # centroid coordinates
+            centers.append([cy, cx])
+            ax.scatter(centers[i][0], centers[i][1], c='white', marker='o')
+            ax.text(centers[i][0], centers[i][1], str(v))
+            ax.text(centers[i][0], centers[i][1], str(v))
+            i = i + 1
+        # Save segments_1 as a picture
+        fig.savefig('segments_1_test_segmentation.png')
         fig.clf()
-        '''
-
         # find segments_unique_1
         segments_unique_1 = np.unique(segments_1)
         print('segments_unique_1: ', segments_unique_1)
         print('segments_unique_1.shape: ', segments_unique_1.shape)
+
 
         # Find segments_2
         fig = plt.figure(frameon=False)
@@ -1735,8 +1708,6 @@ class ExplainRobotNavigation:
                 if img[i, j] == 99:
                    segments_2[i, j] = segments_1[i, j] + segments_unique_2.shape[0]
         '''
-
-        '''
         # plot segments_2 with centroids and labels
         regions = regionprops(segments_2)
         centers = []
@@ -1750,10 +1721,8 @@ class ExplainRobotNavigation:
             i = i + 1
         # Save segments_2 as a picture
         ax.imshow(segments_2, aspect='auto')
-        fig.savefig(path_core + '/testSegmentation_segments_2.png')
+        fig.savefig('segments_2_test_segmentation.png')
         fig.clf()
-        '''
-
         # find segments_unique_2
         segments_unique_2 = np.unique(segments_2)
         print('segments_unique_2: ', segments_unique_2)
@@ -1770,7 +1739,6 @@ class ExplainRobotNavigation:
                     segments_1[i, j] = 2 * segments_1[i, j] + 2 * segments_unique_2.shape[0]
         #'''
         
-        '''
         # plot segments with centroids and labels/weights
         fig = plt.figure(frameon=False)
         w = 4.8
@@ -1791,10 +1759,8 @@ class ExplainRobotNavigation:
             ax.text(centers[i][0], centers[i][1], str(v))
             i = i + 1
         # Save segments as a picture before nice segment numbering
-        fig.savefig(path_core + '/testSegmentation_segments_beforeNiceNumbering.png')
+        fig.savefig('segments_beforeNiceNumbering_test_segmentation.png')
         fig.clf()
-        '''
-        
         # find segments_unique before nice segment numbering
         segments_unique = np.unique(segments_1)
         print('segments_unique: ', segments_unique)
@@ -1806,13 +1772,12 @@ class ExplainRobotNavigation:
                 for k in range(0, segments_unique.shape[0]):
                     if segments_1[i, j] == segments_unique[k]:
                         segments_1[i, j] = k + 1
-        
         # find segments_unique after nice segment numbering
         segments_unique = np.unique(segments_1)
         print('segments_unique (with nice numbering): ', segments_unique)
         print('segments_unique.shape (with nice numbering): ', segments_unique.shape)
-        
-        # plot segments with centroids and labels/weights
+
+        # plot segments with nice numbering with centroids and labels/weights
         fig = plt.figure(frameon=False)
         w = 4.8
         h = 4.8
@@ -1829,26 +1794,12 @@ class ExplainRobotNavigation:
             cx, cy = props.centroid  # centroid coordinates
             centers.append([cy, cx])
             ax.scatter(centers[i][0], centers[i][1], c='white', marker='o')
-            #plt.text(centers[i][0], centers[i][1], str(v))
-            #'''
-            # printing/plotting explanation weights
-            for j in range(0, len(self.exp)):
-                if self.exp[j][0] == i:
-                    #print('i: ', i)
-                    #print('j: ', j)
-                    #print('self.exp[j][0]: ', self.exp[j][0])
-                    #print('self.exp[j][1]: ', self.exp[j][1])
-                    #print('v: ', v)
-                    #print('\n')
-                    ax.text(centers[i][0], centers[i][1], str(round(self.exp[j][1],4)))  #str(round(self.exp[j][1],4)) #str(v))
-                    break
-            #'''
+            ax.text(centers[i][0], centers[i][1], str(v))
             i = i + 1
-        
-        # Save segments with nice numbering as a picture
-        fig.savefig(path_core + '/testSegmentation_segments.png')
+        # Save segments as a picture before nice segment numbering
+        fig.savefig('segments_afterNiceNumbering_test_segmentation.png')
         fig.clf()
-
+        
         # plot segments with centroids and labels/weights
         fig = plt.figure(frameon=False)
         w = 4.8
@@ -1857,7 +1808,8 @@ class ExplainRobotNavigation:
         ax = plt.Axes(fig, [0., 0., 1., 1.])
         ax.set_axis_off()
         fig.add_axes(ax)
-        ax.imshow(self.matrixFlip(segments_1, 'h'), aspect='auto')
+        #ax.imshow(self.matrixFlip(segments_1, 'h'), aspect='auto')
+        ax.imshow(segments_1, aspect='auto')
         regions = regionprops(segments_1)
         centers = []
         i = 0
@@ -1865,7 +1817,7 @@ class ExplainRobotNavigation:
             v = props.label  # value of label
             cx, cy = props.centroid  # centroid coordinates
             centers.append([cy, cx])
-            ax.scatter(160 - centers[i][0], centers[i][1], c='white', marker='o')
+            ax.scatter(centers[i][0], centers[i][1], c='white', marker='o')
             # plt.text(centers[i][0], centers[i][1], str(v))
             # '''
             # printing/plotting explanation weights
@@ -1877,12 +1829,12 @@ class ExplainRobotNavigation:
                     # print('self.exp[j][1]: ', self.exp[j][1])
                     # print('v: ', v)
                     # print('\n')
-                    ax.text(160 - centers[i][0], centers[i][1], str(round(self.exp[j][1], 4)))  # str(round(self.exp[j][1],4)) #str(v))
+                    ax.text(centers[i][0], centers[i][1], str(round(self.exp[j][1], 4)))  # str(round(self.exp[j][1],4)) #str(v))
                     break
             # '''
             i = i + 1
         # Save segments with nice numbering as a picture
-        fig.savefig(path_core + '/flipped_testSegmentation_segments.png')
+        fig.savefig('segments_with_explanation_weights_test_segmentation.png')
         fig.clf()
 
         # print explanation
@@ -1892,4 +1844,3 @@ class ExplainRobotNavigation:
         print('mySlic for testSegmentation ends')
 
         return segments_1
-

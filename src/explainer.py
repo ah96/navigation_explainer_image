@@ -147,4 +147,4 @@ expID = random.randint(0, local_costmap_info.shape[0] - num_of_first_rows_to_del
 exp_nav.explain_instance(expID)
 
 # test and play with image segmentation
-#exp_nav.testSegmentation(expID)
+exp_nav.testSegmentation(expID)
