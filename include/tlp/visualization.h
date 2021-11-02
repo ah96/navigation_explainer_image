@@ -276,6 +276,6 @@ typedef boost::shared_ptr<const TebVisualization> TebVisualizationConstPtr;
 
 
 // Include template method implementations / definitions
-#include <teb_local_planner/visualization.hpp>
+#include <tlp/visualization.hpp>
 
 #endif /* VISUALIZATION_H_ */

@@ -653,7 +653,7 @@ public:
 
 
 // include template implementations / definitions
-#include <teb_local_planner/timed_elastic_band.hpp>
+#include <tlp/timed_elastic_band.hpp>
 
 
 #endif /* TIMED_ELASTIC_BAND_H_ */

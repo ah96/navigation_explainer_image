@@ -48,10 +48,10 @@
 
 #include <base_local_planner/BaseLocalPlannerConfig.h>
 
-#include <teb_local_planner/g2o_types/vertex_timediff.h>
-#include <teb_local_planner/g2o_types/base_teb_edges.h>
-#include <teb_local_planner/g2o_types/penalties.h>
-#include <teb_local_planner/teb_config.h>
+#include <tlp/g2o_types/vertex_timediff.h>
+#include <tlp/g2o_types/base_teb_edges.h>
+#include <tlp/g2o_types/penalties.h>
+#include <tlp/teb_config.h>
 
 #include <Eigen/Core>
 

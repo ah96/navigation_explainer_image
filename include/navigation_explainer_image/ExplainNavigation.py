@@ -104,10 +104,10 @@ class ExplainRobotNavigation:
                                                                             min_weight=0.1)  # min_weight=0.1 - default
 
             # plot results
-            self.plotExplanationMinimal()
+            #self.plotExplanationMinimal()
             #self.plotExplanationMinimalFlipped()
             #self.plotExplanation()
-            #self.plotExplanationFlipped()
+            self.plotExplanationFlipped()
 
         print('explain_instance function ending')
 
@@ -527,7 +527,7 @@ class ExplainRobotNavigation:
 
         # fill the list of local plan coordinates
         #print('self.local_plan_tmp: ', self.local_plan_tmp)
-        print('\nself.local_plan_tmp.shape[0]: ', self.local_plan_tmp.shape[0])
+        #print('\nself.local_plan_tmp.shape[0]: ', self.local_plan_tmp.shape[0])
         local_plan_xs_orig = []
         local_plan_ys_orig = []
         for i in range(0, self.local_plan_tmp.shape[0]):
@@ -538,11 +538,11 @@ class ExplainRobotNavigation:
                 local_plan_xs_orig.append(x_temp)
                 local_plan_ys_orig.append(y_temp)
 
-        print('\nlen(local_plan_xs): ', len(local_plan_xs_orig))
-        print('len(local_plan_ys): ', len(local_plan_ys_orig))
+        #print('\nlen(local_plan_xs): ', len(local_plan_xs_orig))
+        #print('len(local_plan_ys): ', len(local_plan_ys_orig))
 
         # fill the list of transformed plan coordinates
-        print('\nself.transformed_plan.shape[0]: ', self.transformed_plan.shape[0])
+        #print('\nself.transformed_plan.shape[0]: ', self.transformed_plan.shape[0])
         transformed_plan_xs = []
         transformed_plan_ys = []
         closest_to_robot_index = -100
@@ -560,10 +560,10 @@ class ExplainRobotNavigation:
                     min_diff = diff
                     closest_to_robot_index = len(transformed_plan_xs) - 1
 
-        print('\nlen(transformed_plan_xs): ', len(transformed_plan_xs))
-        print('len(transformed_plan_ys): ', len(transformed_plan_ys))
+        #print('\nlen(transformed_plan_xs): ', len(transformed_plan_xs))
+        #print('len(transformed_plan_ys): ', len(transformed_plan_ys))
 
-        print('\nclosest_to_robot_index_original: ', closest_to_robot_index)                    
+        #print('\nclosest_to_robot_index_original: ', closest_to_robot_index)                    
 
         transformed_plan_xs = np.array(transformed_plan_xs)
         transformed_plan_ys = np.array(transformed_plan_ys)
@@ -582,7 +582,7 @@ class ExplainRobotNavigation:
         if max(local_plan_gaps) > local_plan_gap_threshold:
             local_plan_original_gap = True
 
-        print('\nmax(local_plan_original_gaps): ', max(local_plan_gaps))      
+        #print('\nmax(local_plan_original_gaps): ', max(local_plan_gaps))      
         
         if local_plan_original_gap == True:
             deviation_type = 'deviation'
@@ -614,13 +614,15 @@ class ExplainRobotNavigation:
                 deviation_type = 'deviation'    
                     
 
-        print('\nself.expID: ', self.expID)
+        #print('\nself.expID: ', self.expID)
 
-        #'''
+        print('\ndeviation_type: ', deviation_type)
+
+        '''
         print('\ndeviation_type: ', deviation_type)
         print('local_plan_gap: ', local_plan_original_gap)
         print('command velocities original - lin_x: ' + str(self.cmd_vel_original_tmp.iloc[0]) + ', ang_z: ' + str(self.cmd_vel_original_tmp.iloc[1]) + '\n')
-        #'''
+        '''
         
 
         # deviation of local plan from global plan
@@ -787,7 +789,7 @@ class ExplainRobotNavigation:
 
         return np.array(self.cmd_vel_perturb.iloc[:, 3:])
 
-    # plot explanation picture and segments
+   # plot explanation picture and segments
     def plotExplanationMinimal(self):
         path_core = os.getcwd()
 
@@ -873,7 +875,7 @@ class ExplainRobotNavigation:
             i = i + 1
 
         # Save segments with nice numbering as a picture
-        fig.savefig(path_core + '/testSegmentation_segments.png')
+        fig.savefig(path_core + '/weighted_segments.png')
         fig.clf()
 
 
@@ -948,22 +950,22 @@ class ExplainRobotNavigation:
         # print('self.y_odom_index: ', self.y_odom_index)
 
         # save robot odometry orientation to class variables
-        self.odom_z = self.odom_tmp.iloc[0, 2] # minus je upitan
-        self.odom_w = self.odom_tmp.iloc[0, 3]
+        #self.odom_z = self.odom_tmp.iloc[0, 2] # minus je upitan
+        #self.odom_w = self.odom_tmp.iloc[0, 3]
         # calculate Euler angles based on orientation quaternion
-        [self.yaw_odom, pitch_odom, roll_odom] = self.quaternion_to_euler(0.0, 0.0, self.odom_z, self.odom_w)
+        #[self.yaw_odom, pitch_odom, roll_odom] = self.quaternion_to_euler(0.0, 0.0, self.odom_z, self.odom_w)
         # print('roll_odom: ', roll_odom)
         # print('pitch_odom: ', pitch_odom)
         # print('self.yaw_odom: ', self.yaw_odom)
         # find yaw angles projections on x and y axes and save them to class variables
-        self.yaw_odom_x = math.cos(self.yaw_odom)
-        self.yaw_odom_y = math.sin(self.yaw_odom)
+        #self.yaw_odom_x = math.cos(self.yaw_odom)
+        #self.yaw_odom_y = math.sin(self.yaw_odom)
         
         # plot robots' location and orientation
         #print('self.x_odom_index: ', self.x_odom_index)
         #print('self.y_odom_index: ', self.y_odom_index)
         ax.scatter(self.x_odom_index, self.y_odom_index, c='black', marker='o')
-        ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
+        #ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
 
         
         # '''
@@ -972,7 +974,8 @@ class ExplainRobotNavigation:
         #ax.text(0.0, -4.0, 'lin_x=' + str(round(self.cmd_vel_original_tmp.iloc[0], 2)) + ', ' + 'ang_z=' + str(
         #    round(self.cmd_vel_original_tmp.iloc[1], 2)))
         
-        marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask, color=(1, 1, 0), outline_color=(0, 0, 0), mode='outer', background_label=0)
+        #marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask, color=(1, 1, 0), outline_color=(0, 0, 0), mode='outer', background_label=0)
+        marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask)
         
         # marked_boundaries_flipped = marked_boundaries_flipped[0:125, 0:100]
         ax.imshow(marked_boundaries, aspect='auto')  # , aspect='auto')
@@ -1066,7 +1069,7 @@ class ExplainRobotNavigation:
             i = i + 1
 
         # Save segments with nice numbering as a picture
-        fig.savefig(path_core + '/flipped_testSegmentation_segments.png')
+        fig.savefig(path_core + '/weighted_segments_flipped.png')
         fig.clf()
 
 
@@ -1140,24 +1143,24 @@ class ExplainRobotNavigation:
         # print('self.y_odom_index: ', self.y_odom_index)
 
         # save robot odometry orientation to class variables
-        self.odom_z = self.odom_tmp.iloc[0, 2] # minus je upitan
-        self.odom_w = self.odom_tmp.iloc[0, 3]
+        #self.odom_z = self.odom_tmp.iloc[0, 2] # minus je upitan
+        #self.odom_w = self.odom_tmp.iloc[0, 3]
         # calculate Euler angles based on orientation quaternion
-        [self.yaw_odom, pitch_odom, roll_odom] = self.quaternion_to_euler(0.0, 0.0, self.odom_z, self.odom_w)
-        yaw_sign = math.copysign(1, self.yaw_odom)
-        self.yaw_odom = yaw_sign * (math.pi - abs(self.yaw_odom)) 
+        #[self.yaw_odom, pitch_odom, roll_odom] = self.quaternion_to_euler(0.0, 0.0, self.odom_z, self.odom_w)
+        #yaw_sign = math.copysign(1, self.yaw_odom)
+        #self.yaw_odom = yaw_sign * (math.pi - abs(self.yaw_odom)) 
         # print('roll_odom: ', roll_odom)
         # print('pitch_odom: ', pitch_odom)
         # print('self.yaw_odom: ', self.yaw_odom)
         # find yaw angles projections on x and y axes and save them to class variables
-        self.yaw_odom_x = math.cos(self.yaw_odom)
-        self.yaw_odom_y = math.sin(self.yaw_odom)
+        #self.yaw_odom_x = math.cos(self.yaw_odom)
+        #self.yaw_odom_y = math.sin(self.yaw_odom)
 
         # plot robots' location and orientation
         #print('self.x_odom_index: ', self.x_odom_index)
         #print('self.y_odom_index: ', self.y_odom_index)
         ax.scatter(self.x_odom_index, self.y_odom_index, c='black', marker='o')
-        ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
+        #ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
 
         
         # '''
@@ -1166,12 +1169,13 @@ class ExplainRobotNavigation:
         #ax.text(0.0, -4.0, 'lin_x=' + str(round(self.cmd_vel_original_tmp.iloc[0], 2)) + ', ' + 'ang_z=' + str(
         #    round(self.cmd_vel_original_tmp.iloc[1], 2)))
         
-        marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask, color=(1, 1, 0), outline_color=(0, 0, 0), mode='outer', background_label=0)
+        #marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask, color=(1, 1, 0), outline_color=(0, 0, 0), mode='outer', background_label=0)
+        marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask)
         marked_boundaries_flipped = self.matrixFlip(marked_boundaries, 'h')
         
         # marked_boundaries_flipped = marked_boundaries_flipped[0:125, 0:100]
         ax.imshow(marked_boundaries_flipped.astype('float64'), aspect='auto')  # , aspect='auto')
-        fig.savefig(path_core + '/flipped_explanation.png', transparent=False)
+        fig.savefig(path_core + '/explanation_flipped.png', transparent=False)
         fig.clf()
         #fig.close()
 
@@ -1243,11 +1247,11 @@ class ExplainRobotNavigation:
         # plot robot odometry location
         ax.scatter(self.x_odom_index, self.y_odom_index, c='black', marker='o')
         # robot's odometry orientation
-        ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
+        #ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
         
         # plot local costmap
         ax.imshow(self.image.astype(np.uint8), aspect='auto')
-        fig.savefig(path_core + '/straight_local_costmap.png')
+        fig.savefig(path_core + '/local_costmap.png')
         fig.clf()
 
 
@@ -1289,9 +1293,9 @@ class ExplainRobotNavigation:
         self.y_amcl_index = [self.mapIndex_y_amcl]
         ax.scatter(self.x_amcl_index, self.y_amcl_index, c='black', marker='o')
 
-        self.yaw_amcl_x = math.cos(self.yaw_amcl)
-        self.yaw_amcl_y = math.sin(self.yaw_amcl)
-        ax.quiver(self.x_amcl_index, self.y_amcl_index, self.yaw_amcl_x, self.yaw_amcl_y, color='black')
+        #self.yaw_amcl_x = math.cos(self.yaw_amcl)
+        #self.yaw_amcl_y = math.sin(self.yaw_amcl)
+        #ax.quiver(self.x_amcl_index, self.y_amcl_index, self.yaw_amcl_x, self.yaw_amcl_y, color='black')
 
         # plot robot's location in the map
         x_map = int((self.amcl_x - self.mapOriginX) / self.mapResolution)
@@ -1305,7 +1309,7 @@ class ExplainRobotNavigation:
                 if map_tmp.iloc[i, j] == -1:
                     map_tmp.iloc[i, j] = 100
         ax.imshow(map_tmp.astype(np.uint8), aspect='auto')
-        fig.savefig(path_core + '/straight_map.png')
+        fig.savefig(path_core + '/global_map.png')
         fig.clf()
 
         # plot image_temp
@@ -1317,7 +1321,7 @@ class ExplainRobotNavigation:
         ax.set_axis_off()
         fig.add_axes(ax)
         ax.imshow(self.temp_img, aspect='auto')
-        fig.savefig(path_core + '/straight_temp_img.png')
+        fig.savefig(path_core + '/temp_img.png')
         fig.clf()
 
         # plot mask
@@ -1329,7 +1333,7 @@ class ExplainRobotNavigation:
         ax.set_axis_off()
         fig.add_axes(ax)
         ax.imshow(self.mask.astype(np.uint8), aspect='auto')
-        fig.savefig(path_core + '/straight_mask.png')
+        fig.savefig(path_core + '/mask.png')
         fig.clf()
 
         # plot explanation - srediti nekad granice
@@ -1340,12 +1344,14 @@ class ExplainRobotNavigation:
         ax = plt.Axes(fig, [0., 0., 1., 1.])
         ax.set_axis_off()
         fig.add_axes(ax)
-        ax.imshow(mark_boundaries(self.temp_img / 2 + 0.5, self.mask), aspect='auto')
+        #marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask, color=(1, 1, 0), outline_color=(0, 0, 0), mode='outer', background_label=0)
+        marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask)
+        ax.imshow(marked_boundaries, aspect='auto')
         ax.scatter(self.plan_x_list, self.plan_y_list, c='blue', marker='o')
         ax.scatter(self.local_plan_x_list, self.local_plan_y_list, c='red', marker='o')
         ax.scatter(self.x_odom_index, self.y_odom_index, c='black', marker='o')
-        ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
-        fig.savefig(path_core + '/straight_explanation.png')
+        #ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
+        fig.savefig(path_core + '/explanation.png')
         fig.clf()
 
         print('plotExplanation ends')
@@ -1369,7 +1375,7 @@ class ExplainRobotNavigation:
         ax.set_axis_off()
         fig.add_axes(ax)
 
-                # transform global plan from /map to /odom frame
+        # transform global plan from /map to /odom frame
         # rotation matrix
         from scipy.spatial.transform import Rotation as R
         r = R.from_quat(
@@ -1423,16 +1429,16 @@ class ExplainRobotNavigation:
         ax.scatter(self.x_odom_index, self.y_odom_index, c='black', marker='o')
 
         # find yaw angles projections on x and y axes and save them to class variables
-        yaw_sign = math.copysign(1, self.yaw_odom)
-        self.yaw_odom = -1 * yaw_sign * (math.pi - abs(self.yaw_odom))
-        self.yaw_odom_x = math.cos(self.yaw_odom)
-        self.yaw_odom_y = math.sin(self.yaw_odom)
+        #yaw_sign = math.copysign(1, self.yaw_odom)
+        #self.yaw_odom = -1 * yaw_sign * (math.pi - abs(self.yaw_odom))
+        #self.yaw_odom_x = math.cos(self.yaw_odom)
+        #self.yaw_odom_y = math.sin(self.yaw_odom)
 
         # robot's odometry orientation
-        ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
+        #ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
 
         ax.imshow(local_costmap_flipped, aspect='auto')
-        fig.savefig(path_core + '/flipped_local_costmap.png')
+        fig.savefig(path_core + '/local_costmap_flipped.png')
         fig.clf()
 
 
@@ -1475,11 +1481,11 @@ class ExplainRobotNavigation:
         ax.scatter(self.x_amcl_index, self.y_amcl_index, c='black', marker='o')
 
         # find yaw angles projections on x and y axes and save them to class variables
-        yaw_sign = math.copysign(1, self.yaw_amcl)
-        self.yaw_amcl = -1 * yaw_sign * (math.pi - abs(self.yaw_amcl))
-        self.yaw_amcl_x = math.cos(self.yaw_amcl)
-        self.yaw_amcl_y = math.sin(self.yaw_amcl)
-        ax.quiver(self.x_amcl_index, self.y_amcl_index, self.yaw_amcl_x, self.yaw_amcl_y, color='black')
+        #yaw_sign = math.copysign(1, self.yaw_amcl)
+        #self.yaw_amcl = -1 * yaw_sign * (math.pi - abs(self.yaw_amcl))
+        #self.yaw_amcl_x = math.cos(self.yaw_amcl)
+        #self.yaw_amcl_y = math.sin(self.yaw_amcl)
+        #ax.quiver(self.x_amcl_index, self.y_amcl_index, self.yaw_amcl_x, self.yaw_amcl_y, color='black')
 
         # plot robot's location in the map
         x_map = 160 - int((self.amcl_x - self.mapOriginX) / self.mapResolution)
@@ -1494,7 +1500,7 @@ class ExplainRobotNavigation:
                     map_tmp.iloc[i, j] = 100
         map_tmp_flipped = self.matrixFlip(map_tmp, 'h')
         ax.imshow(map_tmp_flipped, aspect='auto')
-        fig.savefig('flipped_map.png')
+        fig.savefig('global_map_flipped.png')
         fig.clf()
 
         # plot image_temp
@@ -1507,7 +1513,7 @@ class ExplainRobotNavigation:
         fig.add_axes(ax)
         temp_img_flipped = self.matrixFlip(self.temp_img, 'h')
         ax.imshow(temp_img_flipped, aspect='auto')
-        fig.savefig(path_core + '/flipped_temp_img.png')
+        fig.savefig(path_core + '/temp_img_flipped.png')
         fig.clf()
         #pd.DataFrame(self.temp_img_flipped[:,:,0]).to_csv('~/amar_ws/temp_img_flipped.csv', index=False, header=False)
 
@@ -1521,7 +1527,7 @@ class ExplainRobotNavigation:
         fig.add_axes(ax)
         mask_flipped = self.matrixFlip(self.mask, 'h')
         plt.imshow(mask_flipped, aspect='auto')
-        plt.savefig(path_core + '/flipped_mask.png')
+        plt.savefig(path_core + '/mask_flipped.png')
         plt.clf()
         #pd.DataFrame(self.mask_flipped[:,:,0]).to_csv('~/amar_ws/mask_flipped.csv', index=False, header=False)
 
@@ -1539,18 +1545,19 @@ class ExplainRobotNavigation:
         # plot robots' location, orientation and local plan
         ax.scatter(self.local_plan_x_list, self.local_plan_y_list, c='red', marker='o')
         ax.scatter(self.x_odom_index, self.y_odom_index, c='black', marker='o')
-        ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
+        #ax.quiver(self.x_odom_index, self.y_odom_index, self.yaw_odom_x, self.yaw_odom_y, color='black')
           
         #'''
         # plot explanation
         #print('self.cmd_vel_original_tmp.shape: ', self.cmd_vel_original_tmp.shape)
         #ax.text(0.0, -5.0, 'lin_x=' + str(round(self.cmd_vel_original_tmp.iloc[0], 2)) + ', ' + 'ang_z=' + str(round(self.cmd_vel_original_tmp.iloc[1], 2)))
+        #marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask, color=(1, 1, 0), outline_color=(0, 0, 0), mode='outer', background_label=0)
         marked_boundaries = mark_boundaries(self.temp_img / 2 + 0.5, self.mask)
         marked_boundaries_flipped = self.matrixFlip(marked_boundaries, 'h')
         
         # marked_boundaries_flipped = marked_boundaries_flipped[0:125, 0:100]
         ax.imshow(marked_boundaries_flipped) #, aspect='auto')
-        fig.savefig(path_core + '/flipped_explanation.png', transparent=False)
+        fig.savefig(path_core + '/explanation_flipped.png', transparent=False)
         fig.clf()
 
         print('plotExplanationFlipped ends')

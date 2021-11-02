@@ -43,12 +43,12 @@
 #ifndef EDGE_OBSTACLE_H_
 #define EDGE_OBSTACLE_H_
 
-#include <teb_local_planner/obstacles.h>
-#include <teb_local_planner/robot_footprint_model.h>
-#include <teb_local_planner/g2o_types/vertex_pose.h>
-#include <teb_local_planner/g2o_types/base_teb_edges.h>
-#include <teb_local_planner/g2o_types/penalties.h>
-#include <teb_local_planner/teb_config.h>
+#include <tlp/obstacles.h>
+#include <tlp/robot_footprint_model.h>
+#include <tlp/g2o_types/vertex_pose.h>
+#include <tlp/g2o_types/base_teb_edges.h>
+#include <tlp/g2o_types/penalties.h>
+#include <tlp/teb_config.h>
 
 
 

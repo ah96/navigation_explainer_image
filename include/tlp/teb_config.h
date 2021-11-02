@@ -44,7 +44,7 @@
 #include <Eigen/Core>
 #include <Eigen/StdVector>
 
-#include <navigation_explainer/TebLocalPlannerReconfigureConfig.h>
+#include <navigation_explainer_image/TebLocalPlannerReconfigureConfig.h>
 
 
 // Definitions

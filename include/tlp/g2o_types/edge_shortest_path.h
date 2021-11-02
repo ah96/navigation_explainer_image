@@ -48,8 +48,8 @@
 
 #include <base_local_planner/BaseLocalPlannerConfig.h>
 
-#include <teb_local_planner/g2o_types/base_teb_edges.h>
-#include <teb_local_planner/g2o_types/vertex_pose.h>
+#include <tlp/g2o_types/base_teb_edges.h>
+#include <tlp/g2o_types/vertex_pose.h>
 
 #include <Eigen/Core>
 

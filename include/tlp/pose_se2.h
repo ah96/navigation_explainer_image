@@ -42,7 +42,7 @@
 #include <g2o/stuff/misc.h>
 
 #include <Eigen/Core>
-#include <teb_local_planner/misc.h>
+#include <tlp/misc.h>
 #include <geometry_msgs/Pose.h>
 #include <tf/transform_datatypes.h>
 
