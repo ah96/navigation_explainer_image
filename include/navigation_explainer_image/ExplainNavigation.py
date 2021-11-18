@@ -104,10 +104,10 @@ class ExplainRobotNavigation:
                                                                             min_weight=0.1)  # min_weight=0.1 - default
 
             # plot results
-            #self.plotExplanationMinimal()
+            self.plotExplanationMinimal()
             #self.plotExplanationMinimalFlipped()
             #self.plotExplanation()
-            self.plotExplanationFlipped()
+            #self.plotExplanationFlipped()
 
         print('explain_instance function ending')
 
